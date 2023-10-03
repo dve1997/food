@@ -130,4 +130,76 @@ window.addEventListener("DOMContentLoaded", () => {
       modalWin.style.display = "block";
     }
   });
+
+  // Classes
+
+  class Product {
+    constructor(src, alt, subtitle, descr, cost, total, currency, ...classes) {
+      this.src = src;
+      this.alt = alt;
+      this.subtitle = subtitle;
+      this.descr = descr;
+      this.cost = cost;
+      this.total = total;
+      this.currency = currency;
+      this.classes = classes;
+    }
+
+    createElem() {
+      const div = document.createElement("div");
+      if (this.classes.length === 0) {
+        this.classes = "menu__item";
+        div.classList.add(this.classes);
+      } else {
+        this.classes.forEach((item) => div.classList.add(item));
+      }
+      div.innerHTML = `
+      <img src=${this.src} alt=${this.alt} />
+      <h3 class="menu__item-subtitle">${this.subtitle}</h3>
+      <div class="menu__item-descr">
+        ${this.descr}
+      </div>
+      <div class="menu__item-divider"></div>
+      <div class="menu__item-price">
+        <div class="menu__item-cost">${this.cost}</div>
+        <div class="menu__item-total"><span>${this.total}</span> ${this.currency}</div>
+      </div>
+    `;
+      const container = document.querySelector(".menu__field .container");
+      container.prepend(div);
+    }
+  }
+
+  const fitnes = new Product(
+    "./img/tabs/vegy.jpg",
+    "vegy",
+    'Меню "Фитнес"',
+    'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
+    "Цена:",
+    "229",
+    "грн/день",
+    "menu__item",
+    "big"
+  );
+  fitnes.createElem();
+  const premium = new Product(
+    "./img/tabs/elite.jpg",
+    "elite",
+    "Меню “Премиум”",
+    "В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!",
+    "Цена:",
+    "550",
+    "грн/день"
+  );
+  premium.createElem();
+  const postn = new Product(
+    "img/tabs/post.jpg",
+    "post",
+    'Меню "Постное"',
+    "Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.",
+    "Цена:",
+    "430",
+    "грн/день"
+  );
+  postn.createElem();
 });
