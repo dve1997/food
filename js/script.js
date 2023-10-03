@@ -170,38 +170,29 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const fitnes = new Product(
-    "./img/tabs/vegy.jpg",
-    "vegy",
-    'Меню "Фитнес"',
-    'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-    "Цена:",
-    "229",
-    "грн/день",
-    "menu__item",
-    "big"
-  );
-  fitnes.createElem();
-  const premium = new Product(
-    "./img/tabs/elite.jpg",
-    "elite",
-    "Меню “Премиум”",
-    "В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!",
-    "Цена:",
-    "550",
-    "грн/день"
-  );
-  premium.createElem();
-  const postn = new Product(
-    "img/tabs/post.jpg",
-    "post",
-    'Меню "Постное"',
-    "Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.",
-    "Цена:",
-    "430",
-    "грн/день"
-  );
-  postn.createElem();
+  const getResurce = async (url) => {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      throw new Error(`Error: ${url}, status: ${res.status}`);
+    }
+
+    return await res.json();
+  };
+
+  getResurce("http://localhost:3000/menu").then((data) => {
+    data.forEach(({ src, alt, subtitle, descr, cost, total, currency }) => {
+      new Product(
+        src,
+        alt,
+        subtitle,
+        descr,
+        cost,
+        total,
+        currency
+      ).createElem();
+    });
+  });
 
   // Forms
 
@@ -213,30 +204,26 @@ window.addEventListener("DOMContentLoaded", () => {
     fail: "Возникла ошибка...",
   };
 
-  function sendForm(form) {
+  const sendForm = async (url, data) => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: data,
+    });
+
+    return await res.json();
+  };
+
+  function bindSendForm(form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const formData = new FormData(form);
-      const obj = {};
-      formData.forEach((item, i) => {
-        obj[i] = item;
-      });
+      const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-      // Рабочая часть XMLHttpRequest
-      // const request = new XMLHttpRequest();
-      // request.open("POST", "server.php");
-      // request.setRequestHeader("Content-type", "application/json");
-      // request.send(json);
-
-      fetch("server.php", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify(obj),
-      })
-        .then((data) => data.text())
+      sendForm("http://localhost:3000/requests", json)
         .then((json) => {
           messenge.remove();
           showMessengeForm(messenges.load);
@@ -254,25 +241,11 @@ window.addEventListener("DOMContentLoaded", () => {
       messenge.textContent = messenges.loading;
       messenge.style.cssText = "text-align: center; margin-top: 10px;";
       form.after(messenge);
-
-      // Рабочая часть XMLHttpRequest
-      // request.addEventListener("load", (e) => {
-      //   if (request.status === 200) {
-      //     console.log(request.response);
-      //     messenge.remove();
-      //     form.reset();
-      //     showMessengeForm(messenges.load);
-      //   } else {
-      //     messenge.remove();
-      //     form.reset();
-      //     showMessengeForm(messenges.fail);
-      //   }
-      // });
     });
   }
 
   forms.forEach((item) => {
-    sendForm(item);
+    bindSendForm(item);
   });
 
   function showMessengeForm(res) {
