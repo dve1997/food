@@ -202,4 +202,98 @@ window.addEventListener("DOMContentLoaded", () => {
     "грн/день"
   );
   postn.createElem();
+
+  // Forms
+
+  const forms = document.querySelectorAll("form");
+
+  const messenges = {
+    loading: "Идет загрузка...",
+    load: "Данные загружены. Мы скоро с Вами свяжемся!",
+    fail: "Возникла ошибка...",
+  };
+
+  function sendForm(form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const obj = {};
+      formData.forEach((item, i) => {
+        obj[i] = item;
+      });
+
+      // Рабочая часть XMLHttpRequest
+      // const request = new XMLHttpRequest();
+      // request.open("POST", "server.php");
+      // request.setRequestHeader("Content-type", "application/json");
+      // request.send(json);
+
+      fetch("server.php", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(obj),
+      })
+        .then((data) => data.text())
+        .then((json) => {
+          messenge.remove();
+          showMessengeForm(messenges.load);
+          console.log(json);
+        })
+        .catch(() => {
+          messenge.remove();
+          showMessengeForm(messenges.fail);
+        })
+        .finally(() => {
+          form.reset();
+        });
+
+      const messenge = document.createElement("div");
+      messenge.textContent = messenges.loading;
+      messenge.style.cssText = "text-align: center; margin-top: 10px;";
+      form.after(messenge);
+
+      // Рабочая часть XMLHttpRequest
+      // request.addEventListener("load", (e) => {
+      //   if (request.status === 200) {
+      //     console.log(request.response);
+      //     messenge.remove();
+      //     form.reset();
+      //     showMessengeForm(messenges.load);
+      //   } else {
+      //     messenge.remove();
+      //     form.reset();
+      //     showMessengeForm(messenges.fail);
+      //   }
+      // });
+    });
+  }
+
+  forms.forEach((item) => {
+    sendForm(item);
+  });
+
+  function showMessengeForm(res) {
+    const modalDialog = document.querySelector(".modal__dialog");
+    const modalContent = document.querySelector(".modal__content");
+    modalContent.style.display = "none";
+
+    const ShowMessenge = document.createElement("div");
+    ShowMessenge.innerHTML = `
+       <div class="modal__content">
+       <div data-close class="modal__close">&times;</div>
+       <div> ${res} </div>
+       </div>
+       `;
+    ShowMessenge.style.cssText = "margin: 0px auto";
+    modalDialog.append(ShowMessenge);
+
+    setTimeout(() => {
+      modalContent.style.display = "block";
+      ShowMessenge.style.display = "none";
+      modalWin.style.display = "none";
+    }, 4000);
+  }
 });
