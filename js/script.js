@@ -125,11 +125,11 @@ window.addEventListener("DOMContentLoaded", () => {
   //   modalWin.style.display = "block";
   // }, 10000);
 
-  window.addEventListener("scroll", (event) => {
-    if (window.pageYOffset > 3613) {
-      modalWin.style.display = "block";
-    }
-  });
+  // window.addEventListener("scroll", (event) => {
+  //   if (window.pageYOffset > 3613) {
+  //     modalWin.style.display = "block";
+  //   }
+  // });
 
   // Classes
 
@@ -180,18 +180,35 @@ window.addEventListener("DOMContentLoaded", () => {
     return await res.json();
   };
 
-  getResurce("http://localhost:3000/menu").then((data) => {
-    data.forEach(({ src, alt, subtitle, descr, cost, total, currency }) => {
-      new Product(
-        src,
-        alt,
-        subtitle,
-        descr,
-        cost,
-        total,
-        currency
-      ).createElem();
-    });
+  // Рабочая часть с fetch вместо axios
+  // getResurce("http://localhost:3000/menu").then((data) => {
+  //   data.forEach(({ src, alt, subtitle, descr, cost, total, currency }) => {
+  //     new Product(
+  //       src,
+  //       alt,
+  //       subtitle,
+  //       descr,
+  //       cost,
+  //       total,
+  //       currency
+  //     ).createElem();
+  //   });
+  // });
+
+  axios.get("http://localhost:3000/menu").then((data) => {
+    data.data.forEach(
+      ({ src, alt, subtitle, descr, cost, total, currency }) => {
+        new Product(
+          src,
+          alt,
+          subtitle,
+          descr,
+          cost,
+          total,
+          currency
+        ).createElem();
+      }
+    );
   });
 
   // Forms
@@ -269,4 +286,60 @@ window.addEventListener("DOMContentLoaded", () => {
       modalWin.style.display = "none";
     }, 4000);
   }
+
+  // Slider
+
+  const offerSliderPrev = document.querySelector(".offer__slider-prev");
+  const offerSliderNext = document.querySelector(".offer__slider-next");
+  const current = document.getElementById("current");
+  const total = document.getElementById("total");
+  const offerSlide = document.querySelectorAll(".offer__slide");
+
+  offerSlide.forEach((item) => {
+    if (item.classList.contains("active")) {
+      item.style.display = "block";
+    } else {
+      item.style.display = "none";
+    }
+  });
+
+  offerSliderNext.addEventListener("click", (e) => {
+    let per1 = +current.textContent;
+    let per2 = +total.textContent;
+
+    if (per1 >= 1 && per1 < per2) {
+      current.textContent = `0${++per1}`;
+    } else {
+      per1 = 0;
+      current.textContent = `0${++per1}`;
+    }
+
+    offerSlide.forEach((item, i) => {
+      if (per1 === ++i) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
+
+  offerSliderPrev.addEventListener("click", (e) => {
+    let per1 = +current.textContent;
+    let per2 = +total.textContent;
+
+    if (per1 > 1 && per1 <= per2) {
+      current.textContent = `0${--per1}`;
+    } else {
+      per1 = 5;
+      current.textContent = `0${--per1}`;
+    }
+
+    offerSlide.forEach((item, i) => {
+      if (per1 === ++i) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
 });
