@@ -294,52 +294,58 @@ window.addEventListener("DOMContentLoaded", () => {
   const current = document.getElementById("current");
   const total = document.getElementById("total");
   const offerSlide = document.querySelectorAll(".offer__slide");
+  const offerSliderConteiner = document.querySelector(
+    ".offer__slider-conteiner"
+  );
+  const offerSliderWrapper = document.querySelector(".offer__slider-wrapper");
 
-  offerSlide.forEach((item) => {
-    if (item.classList.contains("active")) {
-      item.style.display = "block";
+  offerSliderConteiner.style.cssText = "display: flex; width: 400%;";
+  offerSliderWrapper.style.cssText = "overflow: hidden;";
+
+  function showSliderNext() {
+    let listIndex = +current.textContent;
+    let staticIndex = +total.textContent;
+    let index = listIndex;
+
+    if (listIndex >= 1 && listIndex < staticIndex) {
+      current.textContent = `0${++listIndex}`;
+      offerSlide.forEach((item) => {
+        item.style.cssText = `transform: translate(${-100 * index}%, 0);`;
+      });
     } else {
-      item.style.display = "none";
+      listIndex = 0;
+      current.textContent = `0${++listIndex}`;
+      offerSlide.forEach((item) => {
+        item.style.cssText = `transform: translate(0, 0);`;
+      });
     }
-  });
+  }
+
+  function showSliderPrev() {
+    let listIndex = +current.textContent;
+    let staticIndex = +total.textContent;
+    let index = listIndex;
+
+    if (listIndex > 1 && listIndex <= staticIndex) {
+      current.textContent = `0${--listIndex}`;
+      index = --listIndex;
+      offerSlide.forEach((item) => {
+        item.style.cssText = `transform: translate(${-100 * index}%, 0);`;
+      });
+    } else {
+      listIndex = 4;
+      current.textContent = `0${listIndex}`;
+      offerSlide.forEach((item) => {
+        item.style.cssText = `transform: translate(-300%, 0);`;
+      });
+    }
+  }
 
   offerSliderNext.addEventListener("click", (e) => {
-    let per1 = +current.textContent;
-    let per2 = +total.textContent;
-
-    if (per1 >= 1 && per1 < per2) {
-      current.textContent = `0${++per1}`;
-    } else {
-      per1 = 0;
-      current.textContent = `0${++per1}`;
-    }
-
-    offerSlide.forEach((item, i) => {
-      if (per1 === ++i) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
-      }
-    });
+    showSliderNext();
   });
 
   offerSliderPrev.addEventListener("click", (e) => {
-    let per1 = +current.textContent;
-    let per2 = +total.textContent;
-
-    if (per1 > 1 && per1 <= per2) {
-      current.textContent = `0${--per1}`;
-    } else {
-      per1 = 5;
-      current.textContent = `0${--per1}`;
-    }
-
-    offerSlide.forEach((item, i) => {
-      if (per1 === ++i) {
-        item.style.display = "block";
-      } else {
-        item.style.display = "none";
-      }
-    });
+    showSliderPrev();
   });
 });
