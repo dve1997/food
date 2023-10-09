@@ -2,6 +2,7 @@ function forms() {
   // Forms
 
   const forms = document.querySelectorAll("form");
+  const modalWin = document.querySelector(".modal");
 
   const messenges = {
     loading: "Идет загрузка...",
@@ -76,4 +77,4 @@ function forms() {
   }
 }
 
-module.exports = forms;
+export default forms;
