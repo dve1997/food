@@ -1,15 +1,21 @@
-function slider() {
+function slider(
+  offerSliderPrevp,
+  offerSliderNextp,
+  currentp,
+  totalp,
+  offerSlidep,
+  offerSliderConteinerp,
+  offerSliderWrapperp
+) {
   // Slider
 
-  const offerSliderPrev = document.querySelector(".offer__slider-prev");
-  const offerSliderNext = document.querySelector(".offer__slider-next");
-  const current = document.getElementById("current");
-  const total = document.getElementById("total");
-  const offerSlide = document.querySelectorAll(".offer__slide");
-  const offerSliderConteiner = document.querySelector(
-    ".offer__slider-conteiner"
-  );
-  const offerSliderWrapper = document.querySelector(".offer__slider-wrapper");
+  const offerSliderPrev = document.querySelector(offerSliderPrevp);
+  const offerSliderNext = document.querySelector(offerSliderNextp);
+  const current = document.getElementById(currentp);
+  const total = document.getElementById(totalp);
+  const offerSlide = document.querySelectorAll(offerSlidep);
+  const offerSliderConteiner = document.querySelector(offerSliderConteinerp);
+  const offerSliderWrapper = document.querySelector(offerSliderWrapperp);
   let widthS = window.getComputedStyle(offerSliderWrapper).width;
   let width = parseInt(widthS);
 

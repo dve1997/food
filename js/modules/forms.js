@@ -1,8 +1,8 @@
-function forms() {
+function forms(form, modal) {
   // Forms
 
-  const forms = document.querySelectorAll("form");
-  const modalWin = document.querySelector(".modal");
+  const forms = document.querySelectorAll(form);
+  const modalWin = document.querySelector(modal);
 
   const messenges = {
     loading: "Идет загрузка...",

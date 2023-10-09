@@ -1,7 +1,5 @@
-function timer() {
+function timer(deadline) {
   // Timer
-
-  const deadline = "2023-10-10";
 
   function getCurrentDate(deadline) {
     let t = Date.parse(deadline) - new Date(),

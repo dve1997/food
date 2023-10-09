@@ -296,11 +296,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function forms() {
+function forms(form, modal) {
   // Forms
 
-  const forms = document.querySelectorAll("form");
-  const modalWin = document.querySelector(".modal");
+  const forms = document.querySelectorAll(form);
+  const modalWin = document.querySelector(modal);
 
   const messenges = {
     loading: "Идет загрузка...",
@@ -390,13 +390,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function modal() {
+function modal(dataModalp, dataClosep, modalp, btnDarkp) {
   // Modal
 
-  const btnCallOur = document.querySelectorAll("[data-modal]");
-  const btnCross = document.querySelectorAll("[data-close]");
-  const modalWin = document.querySelector(".modal");
-  const btnDark = document.querySelector(".btn_dark");
+  const btnCallOur = document.querySelectorAll(dataModalp);
+  const btnCross = document.querySelectorAll(dataClosep);
+  const modalWin = document.querySelector(modalp);
+  const btnDark = document.querySelector(btnDarkp);
 
   document.addEventListener("click", (event) => {
     let target = event.target;
@@ -447,18 +447,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function slider() {
+function slider(
+  offerSliderPrevp,
+  offerSliderNextp,
+  currentp,
+  totalp,
+  offerSlidep,
+  offerSliderConteinerp,
+  offerSliderWrapperp
+) {
   // Slider
 
-  const offerSliderPrev = document.querySelector(".offer__slider-prev");
-  const offerSliderNext = document.querySelector(".offer__slider-next");
-  const current = document.getElementById("current");
-  const total = document.getElementById("total");
-  const offerSlide = document.querySelectorAll(".offer__slide");
-  const offerSliderConteiner = document.querySelector(
-    ".offer__slider-conteiner"
-  );
-  const offerSliderWrapper = document.querySelector(".offer__slider-wrapper");
+  const offerSliderPrev = document.querySelector(offerSliderPrevp);
+  const offerSliderNext = document.querySelector(offerSliderNextp);
+  const current = document.getElementById(currentp);
+  const total = document.getElementById(totalp);
+  const offerSlide = document.querySelectorAll(offerSlidep);
+  const offerSliderConteiner = document.querySelector(offerSliderConteinerp);
+  const offerSliderWrapper = document.querySelector(offerSliderWrapperp);
   let widthS = window.getComputedStyle(offerSliderWrapper).width;
   let width = parseInt(widthS);
 
@@ -591,12 +597,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function tabs() {
+function tabs(tabcontent, tabheaderItems, tabheaderItem) {
   // Tabs
 
-  const tabContent = document.querySelectorAll(".tabcontent");
-  const tabHeaderItems = document.querySelector(".tabheader__items");
-  const tabHeaderItem = document.querySelectorAll(".tabheader__item");
+  const tabContent = document.querySelectorAll(tabcontent);
+  const tabHeaderItems = document.querySelector(tabheaderItems);
+  const tabHeaderItem = document.querySelectorAll(tabheaderItem);
 
   function noneTabContent() {
     tabContent.forEach((item) => {
@@ -646,10 +652,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function timer() {
+function timer(deadline) {
   // Timer
-
-  const deadline = "2023-10-10";
 
   function getCurrentDate(deadline) {
     let t = Date.parse(deadline) - new Date(),
@@ -788,11 +792,19 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener("DOMContentLoaded", () => {
   (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_0__["default"])();
   (0,_modules_classes__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  (0,_modules_modal__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  (0,_modules_sliders__WEBPACK_IMPORTED_MODULE_4__["default"])();
-  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_5__["default"])();
-  (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])("form", ".modal");
+  (0,_modules_modal__WEBPACK_IMPORTED_MODULE_3__["default"])("[data-modal]", "[data-close]", ".modal", ".btn_dark");
+  (0,_modules_sliders__WEBPACK_IMPORTED_MODULE_4__["default"])(
+    ".offer__slider-prev",
+    ".offer__slider-next",
+    "current",
+    "total",
+    ".offer__slide",
+    ".offer__slider-conteiner",
+    ".offer__slider-wrapper"
+  );
+  (0,_modules_tabs__WEBPACK_IMPORTED_MODULE_5__["default"])(".tabcontent", ".tabheader__items", ".tabheader__item");
+  (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__["default"])("2023-10-10");
 });
 
 })();

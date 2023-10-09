@@ -11,9 +11,17 @@ import timer from "./modules/timer";
 window.addEventListener("DOMContentLoaded", () => {
   calculator();
   classes();
-  forms();
-  modal();
-  sliders();
-  tabs();
-  timer();
+  forms("form", ".modal");
+  modal("[data-modal]", "[data-close]", ".modal", ".btn_dark");
+  sliders(
+    ".offer__slider-prev",
+    ".offer__slider-next",
+    "current",
+    "total",
+    ".offer__slide",
+    ".offer__slider-conteiner",
+    ".offer__slider-wrapper"
+  );
+  tabs(".tabcontent", ".tabheader__items", ".tabheader__item");
+  timer("2023-10-10");
 });

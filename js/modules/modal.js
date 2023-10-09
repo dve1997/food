@@ -1,10 +1,10 @@
-function modal() {
+function modal(dataModalp, dataClosep, modalp, btnDarkp) {
   // Modal
 
-  const btnCallOur = document.querySelectorAll("[data-modal]");
-  const btnCross = document.querySelectorAll("[data-close]");
-  const modalWin = document.querySelector(".modal");
-  const btnDark = document.querySelector(".btn_dark");
+  const btnCallOur = document.querySelectorAll(dataModalp);
+  const btnCross = document.querySelectorAll(dataClosep);
+  const modalWin = document.querySelector(modalp);
+  const btnDark = document.querySelector(btnDarkp);
 
   document.addEventListener("click", (event) => {
     let target = event.target;

@@ -1,9 +1,9 @@
-function tabs() {
+function tabs(tabcontent, tabheaderItems, tabheaderItem) {
   // Tabs
 
-  const tabContent = document.querySelectorAll(".tabcontent");
-  const tabHeaderItems = document.querySelector(".tabheader__items");
-  const tabHeaderItem = document.querySelectorAll(".tabheader__item");
+  const tabContent = document.querySelectorAll(tabcontent);
+  const tabHeaderItems = document.querySelector(tabheaderItems);
+  const tabHeaderItem = document.querySelectorAll(tabheaderItem);
 
   function noneTabContent() {
     tabContent.forEach((item) => {
